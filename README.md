@@ -1,6 +1,10 @@
 # FIEVel
 ### A Fast InExpensive Velocimeter based on an optical mouse sensor
 
+
+# Repository Overview
+Description of project folders and files as well as information how to get started with development.
+
 ## CAD
 CAD files were created in Autodesk Fusion360. Files are included in both .f3z Fusion archive format to retain parametric edibility, as well as STEP format for use with other CAD packages.
 
