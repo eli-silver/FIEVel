@@ -25,12 +25,5 @@ with the full documentation available at: [PlatformIO Teensy docs](https://docs.
 ## Frame Capture
 Visualization of the sensor image has been adapted from [RCmags frame capture github](https://github.com/RCmags/ADNS3080_frame_capture) with changes to allow the program to update faster. This faster frame rate is possible because of the higher communication bandwidth of both ADNS3080-Teensy SPI communication and Teensy-computer USB connection compared to the original documentation designed to work with an Arduino Uno. 
 
-## Visualization
-This folder contains python scripts to capture and log raw sensor data as well as create plots of the sensor output.
-
-Data logging has been done using the serial_output_log.py script. To use this script, change the value of SERIAL_PORT to match the teensy port name. On MAC and Linux this will be of the form '/dev/xxxusbxxx' while on windows this will be of the form 'COM4'. Log files will be named with the value of FILE_NAME followed by a timestamp. This script will log data until it has written the number of lines specified by NUM_LINES. 
-
-The Jupyter notebooks contained in this folder were used for early data visualizations and debugging of the sensor acquisition system. They are included as an example of how to parse the captured data in python but are likely of limited use beyond their intended application. 
-
 ## License:
 FIEVel is licensed under the CC BY-SA 4.0 Creative Commons license. 
