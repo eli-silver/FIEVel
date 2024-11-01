@@ -1,5 +1,8 @@
 # FIEVel
 ### A Fast InExpensive Velocimeter based on an optical mouse sensor
+<p align="center">
+  <img src="https://github.com/harrislab-brown/FIEVel/blob/main/Images/mouse_sensor_overview.png" width="800">
+</p>
 
 
 # Repository Overview
