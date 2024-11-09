@@ -32,8 +32,8 @@ WINDOW_SIZE = 400
 NUM_PIXEL   = 30
 
 # Serial communication [Must match arduino sketch]
-BAUD_RATE   = 2000000
-SERIAL_PORT = '/dev/cu.usbmodem152838801'
+BAUD_RATE   = 200000
+SERIAL_PORT = '/dev/cu.usbmodem124803301'
 BEGIN_CHAR  = 'A'
 
 # Depedent constants

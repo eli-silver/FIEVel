@@ -65,7 +65,6 @@ const byte  Shutter_Max_Bound_Upper      = 0x1e;
 
 // SPI Clock Rate:
 #define SPI_RATE                      2000000
-//#define SPI_RATE                      1000000
 
 
 //--------------- Template Parameters ---------------- [ No characters after backlash! ]
@@ -101,6 +100,6 @@ class ADNS3080 {
     void frameCapture( uint8_t[ADNS3080_PIXELS_X][ADNS3080_PIXELS_Y] );
 };
 
-//#include "ADNS3080.tpp"
+#include "ADNS3080.tpp"
 
 #endif

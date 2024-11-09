@@ -24,6 +24,9 @@ SOFTWARE.
 
 
 //------------ Read and write registers --------------
+#ifndef ADNS3080_TPP
+#define ADNS3080_TPP
+#include "ADNS3080.h"
 
 template<TEMPLATE_TYPE>
 void ADNS3080<TEMPLATE_INPUTS>
@@ -288,3 +291,6 @@ void ADNS3080<TEMPLATE_INPUTS>
   delayMicroseconds(75);
 
 }    
+
+#endif // ADNS3080_TPP
+
