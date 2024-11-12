@@ -6,6 +6,8 @@
 #include "ADNS3080.h"
 #define PIN_RESET     9        
 #define PIN_CS        10
+// LED Pin to trigger motion burst read:
+#define PIN_LED_TRIG 6
 
 class Sensor {
 
@@ -20,6 +22,7 @@ private:
     bool isAutoExposure;
 
     ADNS3080 <PIN_RESET, PIN_CS> mouse_sensor;
+    void frame_interrupt(void);
 
 
 public: 

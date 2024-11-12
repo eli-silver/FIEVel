@@ -4,15 +4,7 @@
 #include "Sensor.h"
 
 
-// SPI pins:
-//#define PIN_RESET     9        
-//#define PIN_CS        10
-
-// LED Pin to trigger motion burst read:
-#define PIN_LED_TRIG 6
-//ADNS3080 <PIN_RESET, PIN_CS> mouse_sensor;
-//ADNS3080 <PIN_RESET, PIN_CS> sensor;
-Sensor new_sensor = Sensor(3000); 
+Sensor new_sensor = Sensor(); 
 
 // Sync with python script
 #define BEGIN_CHAR    'A'
@@ -26,61 +18,80 @@ bool frame_capture = true;
 bool poll_motion = false;
 bool return_zeros = true;
 
-// for polling:
-//IntervalTimer poll_timer;
+const byte numChars = 32;
+char receivedChars[numChars];   // an array to store the received data
 
-void frame_interrupt(void){
-  // uint8_t motion;
-  // uint8_t over_flow;
-  // int8_t dx,dy;
-  // uint8_t squal;
-  // uint16_t shutter;
-  // uint8_t max_pix;
+boolean newData = false;
 
-  //sensor.motionBurst(&motion, &over_flow, &dx, &dy, &squal, &shutter, &max_pix);
-  // uint32_t microseconds = micros();
-  // if((motion == true) | return_zeros) {
-  //   uint32_t frame_time = (microseconds - prev_micros);
-  //   prev_micros = microseconds;
-  //   Serial.printf("%lu %.3lu %u %.3d %u %.3d %.3d \n",microseconds,frame_time,shutter,squal,motion,dx,dy); 
-  // }
+bool recvWithEndMarker() {
+    static byte ndx = 0;
+    char endMarker = '\n';
+    char rc;
+    
+    while (Serial.available() > 0 && newData == false) {
+        rc = Serial.read();
+
+        if (rc != endMarker) {
+            receivedChars[ndx] = rc;
+            ndx++;
+            if (ndx >= numChars) {
+                ndx = numChars - 1;
+            }
+        }
+        else {
+            receivedChars[ndx] = '\0'; // terminate the string
+            ndx = 0;
+            newData = true;
+            return true;
+        }
+    }
+    return false;
 }
+
+void handleSerialInput(void){
+  if(!newData) return;
+
+  char *tokens[10]; // max number of tokens in message is 10
+  char *ptr = NULL; // pointer to next token
+
+  uint8_t i = 0;
+  ptr = strtok(receivedChars, " ");
+  if(ptr == NULL) return;
+  while( ptr != NULL ){
+    tokens[i] = ptr;
+    i ++;
+    ptr = strtok(NULL, " ");
+  }
+
+  uint8_t n=0;
+  while(n < i){
+    Serial.println(tokens[n]);
+    n++;
+  }
+
+  // if(tokens[0] == "sensor" ){
+  //   Serial.println("command: sensor");
+
+  // }else if(tokens[0] == "command: mode"){
+  //   Serial.println("mode");
+  // }else{
+  //   Serial.println("command: invalid");
+  // }
+
+
+  newData = false;
+}
+
 
 void setup() {
   Serial.begin(250000);
   float curr_framerate = new_sensor.get_frame_rate();
-  Serial.printf("Frame rate: %d\n", curr_framerate);
-  delay(100);
+  Serial.printf("Frame rate: %f\n", curr_framerate);
   new_sensor.set_frame_rate(5000);
   curr_framerate = new_sensor.get_frame_rate();
-  Serial.printf("New rame rate: %d\n", curr_framerate);
+  Serial.printf("New rame rate: %f\n", curr_framerate);
 }
 
-void setup_old() {
-
-  Serial.begin(2500000);
-  //bool is_setup =  sensor.setup( true, true );
-
-  Serial.print("Sensor Setup Response: ");
-  //Serial.println(is_setup);
-
-  //uint8_t FRupper = sensor.readRegister(Frame_Period_Max_Bound_Upper);
-  delayMicroseconds( 100 );
-  //uint8_t FRlower = sensor.readRegister(Frame_Period_Max_Bound_Lower);
-  //uint16_t FRcounts = FRupper << 8 | FRlower;
-  //Serial.printf("%lu \n",FRcounts);
-  
-  if(frame_capture){
-    Serial.flush();
-    Serial.println( BEGIN_CHAR );
-  }else if(poll_motion){
-    //poll_timer.begin(frame_interrupt, 157);
-  }
-  else{
-    prev_micros = micros();
-    attachInterrupt(digitalPinToInterrupt(PIN_LED_TRIG), frame_interrupt, FALLING);
-  } 
-}
 
 void loop() {
 //   if(frame_capture){
@@ -102,8 +113,10 @@ void loop() {
 //     // Indicate new frame
 //     Serial.println( BEGIN_CHAR );  
 //   }
-//   else{
-//     // Data is 
-//     delay(10);
-//   }
+  if ( recvWithEndMarker() ) {
+    Serial.println(receivedChars);
+    handleSerialInput();
+  }
+
+
 }
