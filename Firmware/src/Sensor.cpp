@@ -17,7 +17,6 @@
 
 
 Sensor::Sensor( int frame_rate_fps ){
-
     bool is_setup = mouse_sensor.setup(led_strobe, high_res);
     Serial.print("Sensor Setup Response: ");
     Serial.println(is_setup);

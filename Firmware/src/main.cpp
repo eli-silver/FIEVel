@@ -51,8 +51,8 @@ bool recvWithEndMarker() {
 void handleSerialInput(void){
   if(!newData) return;
 
-  char *tokens[10]; // max number of tokens in message is 10
-  char *ptr = NULL; // pointer to next token
+  char* tokens[10]; // max number of tokens in message is 10
+  char* ptr = NULL; // pointer to next token
 
   uint8_t i = 0;
   ptr = strtok(receivedChars, " ");
@@ -68,17 +68,11 @@ void handleSerialInput(void){
     Serial.println(tokens[n]);
     n++;
   }
-
-  // if(tokens[0] == "sensor" ){
-  //   Serial.println("command: sensor");
-
-  // }else if(tokens[0] == "command: mode"){
-  //   Serial.println("mode");
-  // }else{
-  //   Serial.println("command: invalid");
-  // }
-
-
+  if( !strcmp( tokens[0], "sensor" )){
+    Serial.println("command: sensor");
+  }else{
+    Serial.println("command: invalid");
+  }
   newData = false;
 }
 
