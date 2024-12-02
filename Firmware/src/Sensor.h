@@ -14,14 +14,13 @@ class Sensor {
 private:
     uint16_t framerate_counts;
     uint16_t shutter_time_counts;
-    bool high_res = true;
-    bool led_strobe = true;
+    const bool high_res = true;
+    const bool led_strobe = true;
     bool frame_capture;
     bool poll_motion;
     bool return_zeros;
     bool isAutoExposure;
 
-    ADNS3080 <PIN_RESET, PIN_CS> mouse_sensor;
     void frame_interrupt(void);
 
 

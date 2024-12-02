@@ -111,6 +111,7 @@ bool ADNS3080<TEMPLATE_INPUTS>
   // Arbitrary choice is 3000, which is 0x0BB8 or 1/8000 sec shutter speed
 
   delay(5);
+  
 ////////////// SHUTTER SETTING ///////////////////
   uint16_t shutterCounts = 1500;
   uint8_t shutterMask = (byte) shutterCounts & 255;

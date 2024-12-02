@@ -15,15 +15,16 @@
 //     attachInterrupt(digitalPinToInterrupt(PIN_LED_TRIG), frame_interrupt, FALLING);
 //   } 
 
+ADNS3080 <9, 10> mouse_sensor;
 
 Sensor::Sensor( int frame_rate_fps ){
-    bool is_setup = mouse_sensor.setup(led_strobe, high_res);
-    Serial.print("Sensor Setup Response: ");
-    Serial.println(is_setup);
+    //bool is_setup = mouse_sensor.setup(led_strobe, high_res);
+    // Serial.print("Sensor Setup Response: ");
+    // Serial.println(is_setup);
 
-    if (frame_rate_fps > 100 && frame_rate_fps < 6470){
-        set_frame_rate(frame_rate_fps);
-    }
+    // if (frame_rate_fps > 100 && frame_rate_fps < 6470){
+    //     set_frame_rate(frame_rate_fps);
+    // }
 }
 
 
@@ -33,9 +34,7 @@ float Sensor:: get_frame_rate(){
     uint8_t FRlower = mouse_sensor.readRegister(Frame_Period_Max_Bound_Lower);
     uint16_t FRcounts = FRupper << 8 | FRlower;
     return 24000000.0/FRcounts; // return value in FPS
-
 }
-
 
 void Sensor::set_frame_rate(float frame_rate_fps){
     Serial.print(frame_rate_fps);

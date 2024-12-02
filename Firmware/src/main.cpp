@@ -76,18 +76,18 @@ void handleSerialInput(void){
   newData = false;
 }
 
-
 void setup() {
   Serial.begin(250000);
-  float curr_framerate = new_sensor.get_frame_rate();
-  Serial.printf("Frame rate: %f\n", curr_framerate);
-  new_sensor.set_frame_rate(5000);
-  curr_framerate = new_sensor.get_frame_rate();
-  Serial.printf("New rame rate: %f\n", curr_framerate);
+  // float curr_framerate = new_sensor.get_frame_rate();
+  // Serial.printf("Frame rate: %f\n", curr_framerate);
+  // new_sensor.set_frame_rate(5000);
+  // curr_framerate = new_sensor.get_frame_rate();
+  // Serial.printf("New rame rate: %f\n", curr_framerate);
 }
 
-
 void loop() {
+  Serial.println("hello world");
+  delay(100);
 //   if(frame_capture){
 //       // Get frame data
 //     uint8_t frame[ADNS3080_PIXELS_X][ADNS3080_PIXELS_Y];
@@ -107,10 +107,10 @@ void loop() {
 //     // Indicate new frame
 //     Serial.println( BEGIN_CHAR );  
 //   }
-  if ( recvWithEndMarker() ) {
-    Serial.println(receivedChars);
-    handleSerialInput();
-  }
+  // if ( recvWithEndMarker() ) {
+  //   Serial.println(receivedChars);
+  //   handleSerialInput();
+  // }
 
 
 }
